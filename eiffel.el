@@ -15,58 +15,43 @@
   '(
     :language eiffel
     :override t
-    :feature comment
-    ((comment) @font-lock-comment-face)
+    :feature eiffel-highlight
+    ((comment) @font-lock-comment-face
+     (comment_start) @font-lock-comment-delimiter-face
 
-    :language eiffel
-    :override t
-    :feature keyword
-    ((class_declaration "class" @font-lock-keyword-face
+     (boolean_constant) @font-lock-constant-face
+     (current) @font-lock-constant-face
+     (result) @font-lock-constant-face
+
+     (character_constant) @font-lock-string-face
+     (integer_constant) @font-lock-number-face
+     (real_constant) @font-lock-number-face
+     (manifest_string) @font-lock-string-face
+
+     (class_declaration "class" @font-lock-keyword-face
                         (class_name) @font-lock-type-face
-                        "end" @font-lock-keyword-face))
+                        "end" @font-lock-keyword-face)
 
-    :language eiffel
-    :override t
-    :feature keyword
-    ((feature_clause "feature" @font-lock-keyword-face))
+     (feature_clause "feature" @font-lock-keyword-face)
 
-    :language eiffel
-    :override t
-    :feature keyword
-    ((feature_declaration [(identifier) @font-lock-function-name-face
+     (feature_declaration [(identifier) @font-lock-function-name-face
                            (formal_arguments ["(" ")"] @font-lock-bracket-face)
-                           (attribute_or_routine ["end"] @font-lock-keyword-face)]))
+                           (attribute_or_routine ["end"] @font-lock-keyword-face)])
 
-    :language eiffel
-    :override t
-    :feature keyword
-    ((routine_mark "do" @font-lock-keyword-face))
+     (routine_mark "do" @font-lock-keyword-face)
 
 
-    :language eiffel
-    :override t
-    :feature keyword
-    ((boolean_constant ["True" "False"] @font-lock-constant-face))
+     (variable (identifier) @font-lock-variable-use-face)
 
-    :language eiffel
-    :override t
-    :feature keyword
-    ((variable (identifier) @font-lock-variable-use-face))
+     (assignment ":=" @font-lock-operator-face)
 
-    :language eiffel
-    :override t
-    :feature keyword
-    ((assignment ":=" @font-lock-operator-face))
-
-    :language eiffel
-    :override t
-    :feature keyword
-    ((entity_declaration_group
+     (entity_declaration_group
       (identifier_list [(identifier) @font-lock-variable-name-face
                         "," @font-lock-delimiter-face])
       ":" @font-lock-delimiter-face
-      ((type) @font-lock-type-face)))
-    ))
+      ((type) @font-lock-type-face))
+    )))
+
 
 (defvar eiffel-ts-indent-rules
   `((eiffel
@@ -88,8 +73,7 @@
 (defun eiffel-ts-setup ()
   "Setup treesit for eiffel-ts-mode."
 
-  (setq-local treesit-font-lock-feature-list
-              '((comment keyword)))
+  (setq-local treesit-font-lock-feature-list '((eiffel-highlight)))
 
   (setq-local treesit-font-lock-settings
               (apply #'treesit-font-lock-rules
