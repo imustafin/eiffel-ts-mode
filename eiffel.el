@@ -16,64 +16,89 @@
     :language eiffel
     :override t
     :feature eiffel-highlight
-    ((comment) @font-lock-comment-face
-     (comment_start) @font-lock-comment-delimiter-face
+    ([["class" "frozen" "feature" "end" "do" "alias" "convert"
+       "invariant" "across" "as" "loop" "check"
+       "if" "attached" "then" "else" "elseif"
+       "note" "local" "create" "require" "ensure"
+       "from" "variant" "until" "not" "and" "and then" "or" "or else" "xor"
+       ]]
+     @font-lock-keyword-face
 
-     (boolean_constant) @font-lock-constant-face
-     (current) @font-lock-constant-face
-     (result) @font-lock-constant-face
+     [["(" ")" "[" "]" "<<" ">>"]] @font-lock-bracket-face
 
-     (character_constant) @font-lock-string-face
-     (integer_constant) @font-lock-number-face
-     (real_constant) @font-lock-number-face
-     (manifest_string) @font-lock-string-face
+     [["," ":"]] @font-lock-delimiter-face
 
-     (class_declaration "class" @font-lock-keyword-face
-                        (class_name) @font-lock-type-face
-                        "end" @font-lock-keyword-face)
+     [[(unary) ":=" (binary_caret) (binary_mul_div) (binary_plus_minus)
+       (binary_comparison) (binary_and) (binary_or) (binary_implies)
+       (comparison)]]
+     @font-lock-operator-face
 
-     (feature_clause "feature" @font-lock-keyword-face)
+     [(boolean_constant) (current) (result) (void) (current)] @font-lock-constant-face
 
-     (feature_declaration [(identifier) @font-lock-function-name-face
-                           (formal_arguments ["(" ")"] @font-lock-bracket-face)
-                           (attribute_or_routine ["end"] @font-lock-keyword-face)])
+     (header_comment) @font-lock-doc-face
+     (comment) @font-lock-comment-face
+     (class_name) @font-lock-type-face
 
-     (routine_mark "do" @font-lock-keyword-face)
+     [(verbatim_string) (basic_manifest_string)] @font-lock-string-face
 
+     [(integer_constant) (real_constant)] @font-lock-number-face
 
-     (variable (identifier) @font-lock-variable-use-face)
+     (extended_feature_name (identifier) @font-lock-function-name-face)
 
-     (assignment ":=" @font-lock-operator-face)
+     (entity_declaration_group (identifier) @font-lock-variable-name-face)
 
-     (entity_declaration_group
-      (identifier_list [(identifier) @font-lock-variable-name-face
-                        "," @font-lock-delimiter-face])
-      ":" @font-lock-delimiter-face
-      ((type) @font-lock-type-face))
+     ;; Highlight the modified value in calls:
+     ;; x := 1  ;  a.b.c := 1
+     ;; ^              ^
+     (assignment (call (_) @font-lock-variable-name-face :anchor))
     )))
-
 
 (defvar eiffel-ts-indent-rules
   `((eiffel
-     ((node-is "features") parent 0)
+     ((node-is "class_declaration") parent 0)
+     ((parent-is "notes") parent 2)
+
+     ((match "class_name" "class_declaration") parent 2)
+     ((node-is "header_comment") parent 4)
+     ((node-is "comment") parent 2)
+     ((parent-is "class_declaration") parent 0)
+
+     ((parent-is "creation_clause") parent 2)
+
+     ((node-is "feature_clause") parent 0)
      ((node-is "feature_declaration") parent 2)
+     ((node-is "feature_body") parent 0)
+     ((parent-is "feature_body") parent 0)
      ((node-is "attribute_or_routine") parent 2)
+     ((parent-is "attribute_or_routine") parent 0)
      ((node-is "end") parent 0)
 
-     ((node-is "compound") parent 2)
-     ((node-is "instruction") parent 0)
+     ((parent-is "postcondition") parent 2)
+     ((parent-is "precondition") parent 2)
+
+     ((node-is "entity_declaration_list") parent 2)
+     ((parent-is "entity_declaration_list") parent 0)
+
+     ((parent-is "then_part") parent 0)
+     ((node-is "instruction") parent 2)
+     ((node-is "invariant") parent 0)
+     ((parent-is "invariant") parent 2)
+     ((node-is "exit_condition") parent 0)
+     ((parent-is "exit_condition") parent 2)
+     ((node-is "loop_body") parent 0)
+     ((node-is "variant") parent 0)
+     ((parent-is "variant") parent 2)
 
      ((and no-node (parent-is "attribute_or_routine")) parent 2)
      ((and no-node (parent-is "source_file")) parent 2)
      ((and no-node (parent-is "routine_mark")) parent 2)
-     (no-node parent-bol 0)
-
+     (no-node prev-sibling 0)
      )))
 
 (defun eiffel-ts-setup ()
   "Setup treesit for eiffel-ts-mode."
 
-  (setq-local treesit-font-lock-feature-list '((eiffel-highlight)))
+  (setq-local treesit-font-lock-feature-list '((identifier-simple eiffel-highlight)))
 
   (setq-local treesit-font-lock-settings
               (apply #'treesit-font-lock-rules
