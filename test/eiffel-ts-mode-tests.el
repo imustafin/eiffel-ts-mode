@@ -99,3 +99,117 @@
    |else
    |x := 3
    |end"))
+
+(ert-deftest eiffel-class-notes-indent ()
+  "It should indent class' notes"
+  (eiffel-should-indent-buffer
+   "note
+   |  a: 1
+   |class A
+   |end"
+   "note
+   |a: 1
+   |class A
+   |end"))
+
+(ert-deftest eiffel-class-classname-indent ()
+  "It should indent class' class_name"
+  (eiffel-should-indent-buffer
+   "class
+   |  A"
+   "class
+   |A"))
+
+(ert-deftest eiffel-class-create-indent ()
+  "It should indent class' create"
+  (eiffel-should-indent-buffer
+   "class A
+   |create
+   |  f"
+   "class A
+   |create
+   |f"))
+
+(ert-deftest eiffel-locals-indent ()
+  "It should indent feature locals"
+  (eiffel-should-indent-buffer
+   "class A
+   |feature
+   |  x
+   |    local
+   |      a: A"
+   "class A
+   |feature
+   |x
+   |local
+   |a: A"))
+
+(ert-deftest eiffel-feature-header-comment-indent ()
+  "It should indent feature header comments"
+  (eiffel-should-indent-buffer
+   "class A
+   |feature
+   |  x
+   |      -- header"
+   "class A
+   |feature
+   |x
+   |-- header"))
+
+(ert-deftest eiffel-feature-precondition-indent ()
+  "It should indent feature precondition"
+  (eiffel-should-indent-buffer
+   "class A
+   |feature
+   |  x
+   |    require
+   |      True
+   |    deferred
+   |    ensure
+   |      False
+   |    end"
+   "class A
+   |feature
+   |x
+   |require
+   |True
+   |deferred
+   |ensure
+   |False
+   |end"))
+
+(ert-deftest eiffel-loop-indent ()
+  "It should indent loop"
+  (eiffel-should-indent-buffer
+   "class A
+   |feature
+   |  x
+   |    do
+   |      from
+   |        i := 1
+   |      invariant
+   |        True
+   |      until
+   |        i = 10
+   |      loop
+   |        i := i + 1
+   |      variant
+   |        10 - i
+   |      end"
+   "class A
+   |feature
+   |x
+   |do
+   |from
+   |i := 1
+   |invariant
+   |True
+   |until
+   |i = 10
+   |loop
+   |i := i + 1
+   |variant
+   |10 - i
+   |end"))
+
+

@@ -22,9 +22,10 @@
        "invariant" "across" "as" "loop" "check"
        "if" "attached" "then" "else" "elseif"
        "note" "local" "create" "require" "ensure"
-       "from" "variant" "until" "not" "and" "and then" "or" "or else" "xor"
+       "from" "variant" "until" "and" "and then" "or" "or else" "xor"
        "deferred" "inherit" "redefine" "undefine"
-       "detachable"
+       "detachable" "old" "∀" "∃" "¦" "all" "some"
+       "implies" "once" (unary_not)
        ]]
      @font-lock-keyword-face
 
@@ -49,6 +50,9 @@
 
      (extended_feature_name (identifier) @font-lock-function-name-face)
 
+     (iteration (identifier) @font-lock-variable-name-face)
+     (quantifier_loop (identifier) @font-lock-variable-name-face)
+
      (entity_declaration_group (identifier) @font-lock-variable-name-face)
 
      (redefine (identifier) @font-lock-property-use-face)
@@ -63,12 +67,25 @@
 
 (defvar eiffel-ts-indent-rules
   `((eiffel
+     ((node-is "header_comment") parent 4)
      ((parent-is "source_file") column-0 0)
      ((node-is "feature_declaration") parent 2)
      ((parent-is "feature_declaration") parent 2)
 
+     ((parent-is "creation_clause") parent 2)
+
+     ((and (parent-is "class_declaration") (node-is "class_name")) parent 2)
+
      ((and (parent-is "ERROR") (node-is "new_feature")) parent 2)
      ((and (parent-is "ERROR") (node-is "feature_body")) parent 4)
+     ((and (parent-is "ERROR") (node-is "local_declarations")) parent 4)
+     ((and (parent-is "ERROR") (node-is "class_declaration")) parent 2)
+     ((and (parent-is "ERROR") (node-is "precondition")) parent 4)
+     ((and (parent-is "ERROR") (node-is "postcondition")) parent 4)
+
+     ((parent-is "local_declarations") parent 2)
+     ((parent-is "postcondition") parent 2)
+     ((parent-is "precondition") parent 2)
 
      ((parent-is "internal") parent 2)
      ((and no-node (parent-is "attribute_or_routine")) parent 2)
@@ -77,11 +94,18 @@
      ((and no-node (parent-is "conditional")) parent 2)
 
      ((parent-is "initialization") parent 2)
-     ((node-is "exit_condition") prev-sibling 0)
+     ((node-is "invariant") prev-sibling 0)
+     ((parent-is "invariant") parent 2)
+     ((node-is "variant") parent 2)
+     ((parent-is "variant") parent 2)
+     ((node-is "exit_condition") parent 2)
      ((parent-is "exit_condition") parent 2)
-     ((node-is "loop_body") prev-sibling 0)
+     ((node-is "loop_body") parent 2)
      ((node-is "end") parent 0)
      ((parent-is "loop") parent 2)
+
+     ((parent-is "notes") parent 2)
+
 
      ((or (parent-is "then_part") (parent-is "else_part")) grand-parent 2)
 
@@ -117,7 +141,8 @@
 
 (defconst eiffel-ts-mode-indent-keywords
   '("then" "else" "elsif" "rescue" "feature" "require" "ensure" "do"
-    "invariant" "from" "until" "loop")
+    "deferred" "invariant" "from" "until" "loop" "note" "create"
+    "variant")
   "When typing these keywords the line is reindented.")
 
 (defun eiffel-ts-mode-electric-indent-p (char)
@@ -150,6 +175,28 @@
 
   (treesit-major-mode-setup))
 
+(defun eiffel-insert-exists ()
+  "Insert ∃"
+  (interactive)
+  (insert-char ?∃))
+
+(defun eiffel-insert-forall ()
+  "Insert ∀"
+  (interactive)
+  (insert-char ?∀))
+
+(defun eiffel-insert-bar ()
+  "Insert ¦ (used for ∃ and ∀)"
+  (interactive)
+  (insert-char ?¦))
+
+(defvar-keymap eiffel-ts-mode-map
+  :doc "Keymap used in eiffel-ts-mode"
+  :parent prog-mode-map
+  "C-c C-e" #'eiffel-insert-exists
+  "C-c C-a" #'eiffel-insert-forall
+  "C-c C-b" #'eiffel-insert-bar)
+
 ;;;###autoload
 (define-derived-mode eiffel-ts-mode prog-mode "Eiffel[ts]"
   "Major mode for editing Eiffel with tree-sitter."
@@ -161,6 +208,9 @@
 
     (add-hook 'electric-indent-functions #'eiffel-ts-mode-electric-indent-p nil 'local)
 
+    (setq-local comment-start "--")
+    (setq-local comment-end "")
+    (setq-local comment-start-skip "-- *")
     (eiffel-ts-setup)))
 
 ;;;###autoload
