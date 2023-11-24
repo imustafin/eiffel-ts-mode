@@ -28,11 +28,11 @@
   (eiffel-should-indent-buffer
    "class A
    |feature
-   |  x
-   |    do
-   |    end
+   |	x
+   |		do
+   |		end
    |end"
-   "  class A
+   "	class A
    |      feature
    | x
    |do
@@ -69,8 +69,8 @@
   (eiffel-should-indent
    "class A
    |feature
-   |  x
-   |    do
+   |	x
+   |		do
    |end"
    4))
 
@@ -79,15 +79,15 @@
   (eiffel-should-indent-buffer
    "class A
    |feature
-   |  x
-   |    do
-   |      if a then
-   |        x := 1
-   |      elseif b then
-   |        x := 2
-   |      else
-   |        x := 3
-   |      end"
+   |	x
+   |		do
+   |			if a then
+   |				x := 1
+   |			elseif b then
+   |				x := 2
+   |			else
+   |				x := 3
+   |			end"
    "class A
    |feature
    |x
@@ -104,7 +104,7 @@
   "It should indent class' notes"
   (eiffel-should-indent-buffer
    "note
-   |  a: 1
+   |	a: 1
    |class A
    |end"
    "note
@@ -116,7 +116,7 @@
   "It should indent class' class_name"
   (eiffel-should-indent-buffer
    "class
-   |  A"
+   |	A"
    "class
    |A"))
 
@@ -125,7 +125,7 @@
   (eiffel-should-indent-buffer
    "class A
    |create
-   |  f"
+   |	f"
    "class A
    |create
    |f"))
@@ -135,9 +135,9 @@
   (eiffel-should-indent-buffer
    "class A
    |feature
-   |  x
-   |    local
-   |      a: A"
+   |	x
+   |		local
+   |			a: A"
    "class A
    |feature
    |x
@@ -149,8 +149,8 @@
   (eiffel-should-indent-buffer
    "class A
    |feature
-   |  x
-   |      -- header"
+   |	x
+   |			-- header"
    "class A
    |feature
    |x
@@ -161,13 +161,13 @@
   (eiffel-should-indent-buffer
    "class A
    |feature
-   |  x
-   |    require
-   |      True
-   |    deferred
-   |    ensure
-   |      False
-   |    end"
+   |	x
+   |		require
+   |			True
+   |		deferred
+   |		ensure
+   |			False
+   |		end"
    "class A
    |feature
    |x
@@ -183,19 +183,19 @@
   (eiffel-should-indent-buffer
    "class A
    |feature
-   |  x
-   |    do
-   |      from
-   |        i := 1
-   |      invariant
-   |        True
-   |      until
-   |        i = 10
-   |      loop
-   |        i := i + 1
-   |      variant
-   |        10 - i
-   |      end"
+   |	x
+   |		do
+   |			from
+   |				i := 1
+   |			invariant
+   |				True
+   |			until
+   |				i = 10
+   |			loop
+   |				i := i + 1
+   |			variant
+   |				10 - i
+   |			end"
    "class A
    |feature
    |x
@@ -211,5 +211,3 @@
    |variant
    |10 - i
    |end"))
-
-

@@ -25,7 +25,7 @@
        "from" "variant" "until" "and" "and then" "or" "or else" "xor"
        "deferred" "inherit" "redefine" "undefine"
        "detachable" "old" "∀" "∃" "¦" "all" "some"
-       "implies" "once" (unary_not)
+       "implies" "once" (unary_not) "attribute" "agent" "like" "export" "all"
        ]]
      @font-lock-keyword-face
 
@@ -43,6 +43,11 @@
      (header_comment) @font-lock-doc-face
      (comment) @font-lock-comment-face
      (class_name) @font-lock-type-face
+
+     (anchored (call (_) @font-lock-variable-use-face :anchor))
+
+		 (call_agent (agent_target) @font-lock-property-use-face
+								 (agent_unqualified) @font-lock-function-call-face)
 
      [(verbatim_string) (basic_manifest_string)] @font-lock-string-face
 
@@ -98,9 +103,9 @@
      ((parent-is "invariant") parent 2)
      ((node-is "variant") parent 2)
      ((parent-is "variant") parent 2)
-     ((node-is "exit_condition") parent 2)
+     ((node-is "exit_condition") parent 0)
      ((parent-is "exit_condition") parent 2)
-     ((node-is "loop_body") parent 2)
+     ((node-is "loop_body") parent 0)
      ((node-is "end") parent 0)
      ((parent-is "loop") parent 2)
 
@@ -207,6 +212,8 @@
     (treesit-parser-create 'eiffel)
 
     (add-hook 'electric-indent-functions #'eiffel-ts-mode-electric-indent-p nil 'local)
+
+    (setq-default indent-tabs-mode t)
 
     (setq-local comment-start "--")
     (setq-local comment-end "")
