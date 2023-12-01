@@ -47,8 +47,8 @@
 
      (anchored (call (_) @font-lock-variable-use-face :anchor))
 
-		 (call_agent (agent_target) @font-lock-property-use-face
-								 (agent_unqualified) @font-lock-function-call-face)
+		 (call_agent [(agent_target) @font-lock-property-use-face
+									(agent_unqualified) @font-lock-function-call-face])
 
      [(verbatim_string) (basic_manifest_string)] @font-lock-string-face
 
