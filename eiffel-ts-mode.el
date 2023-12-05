@@ -8,8 +8,8 @@
     (modify-syntax-entry ?\' "\"" table)
     (modify-syntax-entry ?\" "\"" table)
 
-    (modify-syntax-entry ?- "< 12" table)
-    (modify-syntax-entry ?\n ">" table)
+    (modify-syntax-entry ?- ". 12" table)
+    (modify-syntax-entry ?\n ">  " table)
     table)
   "Syntax table to use in eiffel-ts-mode")
 
