@@ -24,9 +24,9 @@
        "note" "local" "create" "require" "ensure"
        "from" "variant" "until" "and" "and then" "or" "or else" "xor"
        "deferred" "inherit" "redefine" "undefine"
-       "detachable" "old" "∀" "∃" "¦" "all" "some"
+       "detachable" "old" "∀" "∃" "⟳" "⟲" "¦" "all" "some"
        "implies" "once" (unary_not) "attribute" "agent" "like" "export" "all"
-       "rename"
+       "rename" "inspect" "when" "Precursor"
        ]]
      @font-lock-keyword-face
 
@@ -39,6 +39,8 @@
        (comparison)]]
      @font-lock-operator-face
 
+		 (at_cursor ["@" (identifier)] @font-lock-negation-char-face)
+
      [(boolean_constant) (current) (result) (void) (current)] @font-lock-constant-face
 
      (header_comment) @font-lock-doc-face
@@ -50,7 +52,7 @@
 		 (call_agent [(agent_target) @font-lock-property-use-face
 									(agent_unqualified) @font-lock-function-call-face])
 
-     [(verbatim_string) (basic_manifest_string)] @font-lock-string-face
+     [(verbatim_string) (basic_manifest_string) (character_constant)] @font-lock-string-face
 
      [(integer_constant) (real_constant)] @font-lock-number-face
 
@@ -58,6 +60,9 @@
 
      (iteration (identifier) @font-lock-variable-name-face)
      (quantifier_loop (identifier) @font-lock-variable-name-face)
+		 (loop (identifier) @font-lock-variable-name-face)
+
+		 (object_test (identifier) @font-lock-variable-name-face)
 
      (entity_declaration_group (identifier) @font-lock-variable-name-face)
 
