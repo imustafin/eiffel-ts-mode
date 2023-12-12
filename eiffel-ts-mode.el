@@ -10,6 +10,9 @@
 
     (modify-syntax-entry ?- ". 12" table)
     (modify-syntax-entry ?\n ">  " table)
+
+    (modify-syntax-entry ?⟳ "(⟲" table)
+    (modify-syntax-entry ?⟲ ")⟳" table)
     table)
   "Syntax table to use in eiffel-ts-mode")
 
@@ -26,7 +29,7 @@
        "deferred" "inherit" "redefine" "undefine"
        "detachable" "old" "∀" "∃" "⟳" "⟲" "¦" "all" "some"
        "implies" "once" (unary_not) "attribute" "agent" "like" "export" "all"
-       "rename" "inspect" "when" "Precursor"
+       "rename" "inspect" "when" "Precursor" "obsolete"
        ]]
      @font-lock-keyword-face
 
@@ -202,12 +205,24 @@
   (interactive)
   (insert-char ?¦))
 
+(defun eiffel-insert-loop-from ()
+  "Insert ⟳"
+  (interactive)
+  (insert-char ?⟳))
+
+(defun eiffel-insert-loop-to()
+  "Insert ⟲"
+  (interactive)
+  (insert-char ?⟲))
+
 (defvar-keymap eiffel-ts-mode-map
   :doc "Keymap used in eiffel-ts-mode"
   :parent prog-mode-map
   "C-c C-e" #'eiffel-insert-exists
   "C-c C-a" #'eiffel-insert-forall
-  "C-c C-b" #'eiffel-insert-bar)
+  "C-c C-b" #'eiffel-insert-bar
+  "C-c C-f" #'eiffel-insert-loop-from
+  "C-c C-g" #'eiffel-insert-loop-to)
 
 ;;;###autoload
 (define-derived-mode eiffel-ts-mode prog-mode "Eiffel[ts]"
