@@ -79,6 +79,8 @@
      (rename_pair (identifier) @font-lock-property-use-face)
 		 (new_export_item (identifier) @font-lock-property-use-face)
 
+		 (assigner_mark (identifier) @font-lock-property-use-face)
+
      ;; Highlight the modified value in calls:
      ;; x := 1  ;  a.b.c := 1
      ;; ^              ^
