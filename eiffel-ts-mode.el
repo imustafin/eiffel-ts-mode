@@ -82,7 +82,7 @@
 
 (defvar eiffel-ts-indent-rules
   `((eiffel
-     ((node-is "header_comment") parent 4)
+     ((node-is "header_comment") parent 3)
      ((parent-is "source_file") column-0 0)
      ((node-is "feature_declaration") parent 2)
      ((parent-is "feature_declaration") parent 2)
