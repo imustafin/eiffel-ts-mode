@@ -30,6 +30,7 @@
        "detachable" "old" "∀" "∃" "⟳" "⟲" "¦" "all" "some"
        "implies" "once" (unary_not) "attribute" "agent" "like" "export" "all"
        "rename" "inspect" "when" "Precursor" "obsolete"
+			 "debug" "rescue"
        ]]
      @font-lock-keyword-face
 
