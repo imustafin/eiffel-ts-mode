@@ -61,6 +61,7 @@
      [(integer_constant) (real_constant)] @font-lock-number-face
 
      (extended_feature_name (identifier) @font-lock-function-name-face)
+		 (assigner_mark (identifier) @font-lock-property-use-face)
 
      (iteration (identifier) @font-lock-variable-name-face)
      (quantifier_loop (identifier) @font-lock-variable-name-face)
