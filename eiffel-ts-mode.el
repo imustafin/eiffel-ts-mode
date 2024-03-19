@@ -75,6 +75,7 @@
      (undefine (identifier) @font-lock-property-use-face)
      (creation_clause (identifier) @font-lock-property-use-face)
      (rename_pair (identifier) @font-lock-property-use-face)
+		 (new_export_item (identifier) @font-lock-property-use-face)
 
      ;; Highlight the modified value in calls:
      ;; x := 1  ;  a.b.c := 1
