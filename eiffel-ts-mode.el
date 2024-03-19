@@ -130,6 +130,10 @@
      ((and no-node (parent-is "class_declaration")) parent 2)
      ((parent-is "class_declaration") parent 0)
 
+		 ((parent-is "inheritance") parent 2)
+		 ((parent-is "parent") parent 2)
+		 ((n-p-gp nil nil "feature_adaptation") parent 2)
+
      ((parent-is "ERROR") prev-line 0)
      (catch-all parent-bol 0)
      )))
