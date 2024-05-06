@@ -120,19 +120,32 @@
      ((parent-is "exit_condition") parent 2)
      ((node-is "loop_body") parent 0)
      ((node-is "end") parent 0)
-     ((parent-is "loop") parent 2)
+     ((parent-is "loop") parent-bol 2)
+		 ((parent-is "iteration") parent 2)
 
      ((parent-is "notes") parent 2)
 
 
      ((or (parent-is "then_part") (parent-is "else_part")) grand-parent 2)
 
+		 ((parent-is "check") parent 2)
+
      ((and no-node (parent-is "class_declaration")) parent 2)
      ((parent-is "class_declaration") parent 0)
+
+		 ((node-is ")") parent-bol 0)
+		 ((parent-is "parenthesized") parent-bol 2)
+		 ((parent-is "expression") parent-bol 2)
 
 		 ((parent-is "inheritance") parent 2)
 		 ((parent-is "parent") parent 2)
 		 ((n-p-gp nil nil "feature_adaptation") parent 2)
+
+		 ((n-p-gp nil "actuals" nil) parent-bol 2)
+		 ((n-p-gp "." "call" nil) parent-bol 2)
+
+		 ((parent-is "verbatim_string_closer") parent-bol 0)
+		 ((parent-is "verbatim_string_content") no-indent)
 
      ((parent-is "ERROR") prev-line 0)
      (catch-all parent-bol 0)
