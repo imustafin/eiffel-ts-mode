@@ -31,6 +31,7 @@
        "implies" "once" (unary_not) "attribute" "agent" "like" "export" "all"
        "rename" "inspect" "when" "Precursor" "obsolete"
 			 "debug" "rescue" "assign" (retry)
+			 "external"
        ]]
      @font-lock-keyword-face
 
