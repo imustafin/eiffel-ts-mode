@@ -127,6 +127,9 @@
      ((parent-is "notes") parent 2)
 
 
+		 ((and (node-is "comment")
+					 (or (parent-is "then_part") (parent-is "else_part")))
+			grand-parent 4)
      ((or (parent-is "then_part") (parent-is "else_part")) grand-parent 2)
 
 		 ((parent-is "check") parent 2)
@@ -147,6 +150,8 @@
 
 		 ((parent-is "verbatim_string_closer") parent-bol 0)
 		 ((parent-is "verbatim_string_content") no-indent)
+
+		 ((parent-is "entity_declaration_list") parent-bol 2)
 
      ((parent-is "ERROR") prev-line 0)
      (catch-all parent-bol 0)
@@ -266,8 +271,6 @@
 ;;;###autoload
 (if (treesit-ready-p 'eiffel t)
     (add-to-list 'auto-mode-alist '("\\.e\\'" . eiffel-ts-mode)))
-
-
 
 (provide 'eiffel-ts-mode)
 ;;; eiffel-ts-mode.el ends here
