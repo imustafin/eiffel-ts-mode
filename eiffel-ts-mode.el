@@ -21,19 +21,20 @@
     :language eiffel
     :override t
     :feature eiffel-highlight
-    ([["class" "frozen" "feature" "end" "do" "alias" "convert"
-       "invariant" "across" "as" "loop" "check"
-       "if" "attached" "then" "else" "elseif"
-       "note" "local" "create" "require" "ensure"
-       "from" "variant" "until" "and" "and then" "or" "or else" "xor"
-       "deferred" "inherit" "redefine" "undefine"
-       "detachable" "old" "∀" "∃" "⟳" "⟲" "¦" "all" "some"
-       "implies" "once" (unary_not) "attribute" "agent" "like" "export" "all"
-       "rename" "inspect" "when" "Precursor" "obsolete"
+		([["class" "frozen" "feature" "end" "do" "alias" "convert"
+			 "invariant" "across" "as" "loop" "check"
+			 "if" "attached" "then" "else" "elseif"
+			 "note" "local" "create" "require" "ensure"
+			 "from" "variant" "until" "and" "and then" "or" "or else" "xor"
+			 "deferred" "inherit" "redefine" "undefine"
+			 "detachable" "old" "∀" "∃" "⟳" "⟲" "¦" "all" "some"
+			 "implies" "once" (unary_not) "attribute" "agent" "like" "export" "all"
+			 "rename" "inspect" "when" "Precursor" "obsolete"
 			 "debug" "rescue" "assign" (retry)
 			 "external"
-       ]]
-     @font-lock-keyword-face
+			 ]]
+		 @font-lock-keyword-face
+
 
      [["(" ")" "[" "]" "<<" ">>"]] @font-lock-bracket-face
 
@@ -81,8 +82,16 @@
      ;; Highlight the modified value in calls:
      ;; x := 1  ;  a.b.c := 1
      ;; ^              ^
-     (assignment (call (_) @font-lock-variable-name-face :anchor))
-     )))
+     (assignment (call (_) @font-lock-variable-name-face :anchor)))
+
+    :language eiffel
+    :override t
+    :feature check-then-warning
+		((check ("check" @font-lock-warning-face
+						 _
+						 "then" @font-lock-warning-face
+						 _ :*
+						 "end" @font-lock-warning-face)))))
 
 (defvar eiffel-ts-indent-rules
   `((eiffel
@@ -202,7 +211,7 @@
 (defun eiffel-ts-setup ()
   "Setup treesit for eiffel-ts-mode."
 
-  (setq-local treesit-font-lock-feature-list '((identifier-simple eiffel-highlight)))
+  (setq-local treesit-font-lock-feature-list '((eiffel-highlight check-then-warning)))
 
   (setq-local treesit-font-lock-settings
               (apply #'treesit-font-lock-rules
