@@ -104,6 +104,7 @@
 
      ((and (parent-is "class_declaration") (node-is "class_name")) parent 2)
 
+		 ((n-p-gp "routine_mark" "ERROR" "feature_declaration") grand-parent 2)
      ((and (parent-is "ERROR") (node-is "new_feature")) parent 2)
      ((and (parent-is "ERROR") (node-is "feature_body")) parent 4)
      ((and (parent-is "ERROR") (node-is "local_declarations")) parent 4)
@@ -147,8 +148,11 @@
      ((parent-is "class_declaration") parent 0)
 
 		 ((node-is ")") parent-bol 0)
+		 ((node-is "]") parent-bol 0)
 		 ((parent-is "parenthesized") parent-bol 2)
 		 ((parent-is "expression") parent-bol 2)
+		 ((node-is "tuple_parameter_list") parent-bol 2)
+		 ((n-p-gp nil nil "tuple_parameter_list") parent-bol 2)
 
 		 ((parent-is "inheritance") parent 2)
 		 ((parent-is "parent") parent 2)
@@ -160,7 +164,9 @@
 		 ((parent-is "verbatim_string_closer") parent-bol 0)
 		 ((parent-is "verbatim_string_content") no-indent)
 
-		 ((parent-is "entity_declaration_list") parent-bol 2)
+		 ((parent-is "local_declarations") grand-parent 2)
+
+		 ((parent-is "actual_generics") parent-bol 2)
 
      ((parent-is "ERROR") prev-line 0)
      (catch-all parent-bol 0)
