@@ -13,7 +13,22 @@
 			(sp-local-pair "if" "end"
 										 :when '(("SPC"))
 										 :actions '(insert navigate)
-										 :post-handlers '("| then\n[i]")))))
+										 :post-handlers '("| then\n[i]"))
+			(sp-local-pair "do" "end"
+										 :when '(("RET"))
+										 :actions '(insert navigate)
+										 :post-handlers '("||\n[i]"))
+			(sp-local-pair "check" "end"
+										 :when '(("SPC"))
+										 :actions '(insert navigate))
+			(sp-local-pair "<<" ">>"
+										 :when '(("SPC"))
+										 :actions '(insert navigate)
+										 :post-handlers '("| "))
+			(sp-local-pair "loop" "end"
+										 :when '(("RET"))
+										 :actions '(insert navigate)
+										 :post-handlers '("||\n[i]")))))
 
 (defun eiffel/post-init-company ()
 	(spacemacs|add-company-backends
