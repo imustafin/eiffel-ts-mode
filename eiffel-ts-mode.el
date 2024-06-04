@@ -88,7 +88,7 @@
     :override t
     :feature check-then-warning
 		((check ("check" @font-lock-warning-face
-						 _
+						 _ :?
 						 "then" @font-lock-warning-face
 						 _ :*
 						 "end" @font-lock-warning-face)))))
@@ -130,7 +130,6 @@
      ((node-is "exit_condition") parent 0)
      ((parent-is "exit_condition") parent 2)
      ((node-is "loop_body") parent 0)
-     ((node-is "end") parent 0)
      ((parent-is "loop") parent-bol 2)
 		 ((parent-is "iteration") parent 2)
 
@@ -140,6 +139,10 @@
 		 ((and (node-is "comment")
 					 (or (parent-is "then_part") (parent-is "else_part")))
 			grand-parent 4)
+
+		 ((parent-is "then_part_expression") parent-bol 2)
+		 ((n-p-gp "else" "conditional_expression" nil) parent-bol 0)
+		 ((n-p-gp "end" "conditional_expression" nil) parent-bol 0)
      ((or (parent-is "then_part") (parent-is "else_part")) grand-parent 2)
 
 		 ((parent-is "check") parent 2)
@@ -165,9 +168,11 @@
 		 ((parent-is "verbatim_string_content") no-indent)
 
 		 ((parent-is "local_declarations") grand-parent 2)
+		 ((parent-is "formal_arguments") parent-bol 2)
 
 		 ((parent-is "actual_generics") parent-bol 2)
 
+     ((node-is "end") parent 0)
      ((parent-is "ERROR") prev-line 0)
      (catch-all parent-bol 0)
      )))
