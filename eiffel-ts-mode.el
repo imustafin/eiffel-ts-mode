@@ -8,6 +8,8 @@
     (modify-syntax-entry ?\' "\"" table)
     (modify-syntax-entry ?\" "\"" table)
 
+		(modify-syntax-entry ?% "\\" table)
+
     (modify-syntax-entry ?- ". 12" table)
     (modify-syntax-entry ?\n ">  " table)
 
@@ -58,6 +60,7 @@
 		 (call_agent [(agent_target) @font-lock-property-use-face
 									(agent_unqualified (identifier) @font-lock-function-call-face)])
 
+		 (special_text) @font-lock-escape-face
      [(verbatim_string) (basic_manifest_string) (character_constant)] @font-lock-string-face
 
      [(integer_constant) (real_constant)] @font-lock-number-face
@@ -193,7 +196,12 @@
                             'syntax-table (string-to-syntax "(>"))
          (put-text-property (1- (treesit-node-end node)) (treesit-node-end node)
                             'syntax-table (string-to-syntax ")<")
-                            ))))))
+                            ))
+				('special_text
+				 (put-text-property (1+ (treesit-node-start node)) (treesit-node-end node)
+														'syntax-table (string-to-syntax "."))
+				 (put-text-property (treesit-node-start node) (1+ (treesit-node-start node))
+														'syntax-table (string-to-syntax "\\")))))))
 
 (defun eiffel-ts-mode-at-indentation-p (&optional point)
   (save-excursion
