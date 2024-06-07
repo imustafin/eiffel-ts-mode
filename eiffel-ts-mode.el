@@ -1,3 +1,15 @@
+;;; eiffel-ts-mode.el --- Major mode for editing Eiffel using tree-sitter -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2024 Ilgiz Mustafin
+
+;; Author: Ilgiz Mustafin
+;; Version: 0.1
+;; Keywords: eiffel languages tree-sitter
+;; URL: https://github.com/imustafin/eiffel-ts-mode
+;; Package-Requires: ((emacs "29.1"))
+
+;;; Code:
+
 (require 'treesit)
 
 (require 'prog-mode)
@@ -100,6 +112,7 @@
 
 (defvar eiffel-ts-indent-rules
   `((eiffel
+		 ((n-p-gp "header_comment" "ERROR" nil) parent 6)
      ((node-is "header_comment") parent 4)
      ((parent-is "source_file") column-0 0)
      ((node-is "feature_declaration") parent 2)
@@ -130,11 +143,12 @@
      ((parent-is "initialization") parent 2)
      ((node-is "invariant") prev-sibling 0)
      ((parent-is "invariant") parent 2)
-     ((node-is "variant") parent 2)
+     ((node-is "variant") parent 0)
      ((parent-is "variant") parent 2)
      ((node-is "exit_condition") parent 0)
      ((parent-is "exit_condition") parent 2)
      ((node-is "loop_body") parent 0)
+		 ((n-p-gp "end" "loop" nil) parent 0)
      ((parent-is "loop") parent-bol 2)
 		 ((parent-is "iteration") parent 2)
 
@@ -292,6 +306,7 @@
     (add-hook 'electric-indent-functions #'eiffel-ts-mode-electric-indent-p nil 'local)
 
     (setq-default indent-tabs-mode t)
+    (setq-default tab-width 2)
 
     (setq-local comment-start "--")
     (setq-local comment-end "")
