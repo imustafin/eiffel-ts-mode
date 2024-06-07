@@ -15,14 +15,24 @@ jobs:
           - release-snapshot
     steps:
     - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
+      with:
+        repository: imustafin/tree-sitter-eiffel
+        ref: v1.0.0
+        path: ts
+    - name: Install tree-sitter grammar
+      run: |
+        cd ts
+        make DESTDIR=ts-build install
+        mkdir -p ~/.emacs.d/tree-sitter/
+        cp libtree-sitter-eiffel.so ~/.emacs.d/tree-sitter/
     - uses: purcell/setup-emacs@v6.0
       with:
         version: ${{ matrix.emacs_version }}
     - uses: leotaku/elisp-check@v1.4.0
       with:
-        file: eiffel-ts-mode.el
-    - uses: leotaku/elisp-check@v1.4.0
-      if: ${{ !cancelled() }}
-      with:
         check: ert
         file: test/eiffel-ts-mode-test.el
+    - uses: leotaku/elisp-check@v1.4.0
+      with:
+        file: eiffel-ts-mode.el
