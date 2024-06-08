@@ -1,3 +1,21 @@
+;;; eiffel-ts-mode.el --- Major mode for editing Eiffel using tree-sitter -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2024 Ilgiz Mustafin
+
+;; Author: Ilgiz Mustafin
+;; Version: 0.1
+;; Keywords: eiffel languages tree-sitter
+;; URL: https://github.com/imustafin/eiffel-ts-mode
+;; Package-Requires: ((emacs "29.1"))
+
+;;; Commentary:
+
+;; This file defines eiffel-ts-mode which is a major mode for editing
+;; Eiffel files.
+
+
+;;; Code:
+
 (require 'treesit)
 
 (require 'prog-mode)
@@ -16,7 +34,7 @@
     (modify-syntax-entry ?⟳ "(⟲" table)
     (modify-syntax-entry ?⟲ ")⟳" table)
     table)
-  "Syntax table to use in eiffel-ts-mode")
+  "Syntax table to use in `eiffel-ts-mode'.")
 
 (defvar eiffel-ts-font-lock-rules
   '(
@@ -100,6 +118,7 @@
 
 (defvar eiffel-ts-indent-rules
   `((eiffel
+		 ((n-p-gp "header_comment" "ERROR" nil) parent 6)
      ((node-is "header_comment") parent 4)
      ((parent-is "source_file") column-0 0)
      ((node-is "feature_declaration") parent 2)
@@ -130,11 +149,12 @@
      ((parent-is "initialization") parent 2)
      ((node-is "invariant") prev-sibling 0)
      ((parent-is "invariant") parent 2)
-     ((node-is "variant") parent 2)
+     ((node-is "variant") parent 0)
      ((parent-is "variant") parent 2)
      ((node-is "exit_condition") parent 0)
      ((parent-is "exit_condition") parent 2)
      ((node-is "loop_body") parent 0)
+		 ((n-p-gp "end" "loop" nil) parent 0)
      ((parent-is "loop") parent-bol 2)
 		 ((parent-is "iteration") parent 2)
 
@@ -179,8 +199,7 @@
 
      ((node-is "end") parent 0)
      ((parent-is "ERROR") prev-line 0)
-     (catch-all parent-bol 0)
-     )))
+     (catch-all parent-bol 0))))
 
 (defvar eiffel-ts-mode-s-p-query
   (when (treesit-available-p)
@@ -195,8 +214,7 @@
          (put-text-property (treesit-node-start node) (1+ (treesit-node-start node))
                             'syntax-table (string-to-syntax "(>"))
          (put-text-property (1- (treesit-node-end node)) (treesit-node-end node)
-                            'syntax-table (string-to-syntax ")<")
-                            ))
+                            'syntax-table (string-to-syntax ")<")))
 				('special_text
 				 (put-text-property (1+ (treesit-node-start node)) (treesit-node-end node)
 														'syntax-table (string-to-syntax "."))
@@ -230,9 +248,10 @@
                  (eq (match-end 0) (1- pt)))))))))
 
 (defun eiffel-ts-setup ()
-  "Setup treesit for eiffel-ts-mode."
+  "Setup treesit for `eiffel-ts-mode'."
 
-  (setq-local treesit-font-lock-feature-list '((eiffel-highlight check-then-warning)))
+  (setq-local treesit-font-lock-feature-list
+							'((eiffel-highlight check-then-warning)))
 
   (setq-local treesit-font-lock-settings
               (apply #'treesit-font-lock-rules
@@ -246,39 +265,39 @@
 
   (treesit-major-mode-setup))
 
-(defun eiffel-insert-exists ()
-  "Insert ∃"
+(defun eiffel-ts-insert-exists ()
+  "Insert ∃."
   (interactive)
   (insert-char ?∃))
 
-(defun eiffel-insert-forall ()
-  "Insert ∀"
+(defun eiffel-ts-insert-forall ()
+  "Insert ∀."
   (interactive)
   (insert-char ?∀))
 
-(defun eiffel-insert-bar ()
-  "Insert ¦ (used for ∃ and ∀)"
+(defun eiffel-ts-insert-bar ()
+  "Insert ¦ (used for ∃ and ∀)."
   (interactive)
   (insert-char ?¦))
 
-(defun eiffel-insert-loop-from ()
-  "Insert ⟳"
+(defun eiffel-ts-insert-loop-from ()
+  "Insert ⟳."
   (interactive)
   (insert-char ?⟳))
 
-(defun eiffel-insert-loop-to()
-  "Insert ⟲"
+(defun eiffel-ts-insert-loop-to()
+  "Insert ⟲."
   (interactive)
   (insert-char ?⟲))
 
 (defvar-keymap eiffel-ts-mode-map
   :doc "Keymap used in eiffel-ts-mode"
   :parent prog-mode-map
-  "C-c C-e" #'eiffel-insert-exists
-  "C-c C-a" #'eiffel-insert-forall
-  "C-c C-b" #'eiffel-insert-bar
-  "C-c C-f" #'eiffel-insert-loop-from
-  "C-c C-g" #'eiffel-insert-loop-to)
+  "C-c C-e" #'eiffel-ts-insert-exists
+  "C-c C-a" #'eiffel-ts-insert-forall
+  "C-c C-b" #'eiffel-ts-insert-bar
+  "C-c C-f" #'eiffel-ts-insert-loop-from
+  "C-c C-g" #'eiffel-ts-insert-loop-to)
 
 ;;;###autoload
 (define-derived-mode eiffel-ts-mode prog-mode "Eiffel[ts]"
@@ -292,6 +311,7 @@
     (add-hook 'electric-indent-functions #'eiffel-ts-mode-electric-indent-p nil 'local)
 
     (setq-default indent-tabs-mode t)
+    (setq-default tab-width 2)
 
     (setq-local comment-start "--")
     (setq-local comment-end "")
