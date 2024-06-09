@@ -222,6 +222,7 @@
                            '((manifest_array) @manifest_array))))
 
 (defun eiffel-ts-mode-syntax-propertize (beg end)
+  "Add text properties using tree-sitter in between positions BEG and END."
   (let ((captures (treesit-query-capture 'eiffel eiffel-ts-mode-s-p-query beg end)))
     (pcase-dolist (`(,name . ,node) captures)
       (pcase-exhaustive name
@@ -237,6 +238,7 @@
 														'syntax-table (string-to-syntax "\\")))))))
 
 (defun eiffel-ts-mode-at-indentation-p (&optional point)
+  "Is POINT at good indentation location?"
   (save-excursion
     (unless point (setq point (point)))
     (forward-line 0)
@@ -250,6 +252,7 @@
   "When typing these keywords the line is reindented.")
 
 (defun eiffel-ts-mode-electric-indent-p (char)
+  "After typing CHAR, should the line be reindented?"
   (cond
    ((and (>= char ?a) (<= char ?z))
     (let ((pt (point)))
