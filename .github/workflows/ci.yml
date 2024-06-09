@@ -35,4 +35,5 @@ jobs:
         file: test/eiffel-ts-mode-test.el
     - uses: leotaku/elisp-check@v1.4.0
       with:
+        check: melpa
         file: eiffel-ts-mode.el
