@@ -1,6 +1,26 @@
 # eiffel-ts-mode
 This is an emacs major mode for the Eiffel programming language.
 
+<table>
+<tr>
+<td>
+	<img src="docs/highlight.png" width="320" alt="Highlighted Eiffel code">
+</td>
+<td>
+	<img src="docs/indent-pre.png" width="160" alt="Eiffel code without indentation">
+	<img src="docs/indent-post.png" width="160" alt="Eiffel code with indentation">
+</td>
+</tr>
+<tr>
+<td>
+Code highlight (my theme is [solarized-dark](https://github.com/bbatsov/solarized-emacs))
+</td>
+<td>
+Automatic indentation
+</td>
+</tr>
+</table>
+
 ## Installation
 ### Emacs
 This package requires Emacs 29 built with tree-sitter support.
