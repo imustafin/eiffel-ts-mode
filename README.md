@@ -1,5 +1,8 @@
 # eiffel-ts-mode
-This is an emacs major mode for the Eiffel programming language.
+This is an emacs major mode for the Eiffel programming language based on tree-sitter.
+
+For the previous eiffel-mode without tree-sitter support see
+<https://github.com/jonhermansen/eiffel-mode>.
 
 <table>
 <tr>
