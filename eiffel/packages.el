@@ -53,22 +53,22 @@
 		:post-config
 		(sp-with-modes 'eiffel-ts-mode
 			(sp-local-pair "if" "end"
-										 :when '(("SPC"))
+										 :when '(("SPC") sp-in-code-p)
 										 :actions '(insert navigate)
 										 :post-handlers '("| then\n[i]"))
 			(sp-local-pair "do" "end"
-										 :when '(("RET"))
+										 :when '(("RET") sp-in-code-p)
 										 :actions '(insert navigate)
 										 :post-handlers '("||\n[i]"))
 			(sp-local-pair "check" "end"
-										 :when '(("SPC"))
+										 :when '(("SPC") sp-in-code-p)
 										 :actions '(insert navigate))
 			(sp-local-pair "<<" ">>"
-										 :when '(("SPC"))
+										 :when '(("SPC") sp-in-code-p)
 										 :actions '(insert navigate)
 										 :post-handlers '("| "))
 			(sp-local-pair "loop" "end"
-										 :when '(("RET"))
+										 :when '(("RET") sp-in-code-p)
 										 :actions '(insert navigate)
 										 :post-handlers '("||\n[i]")))))
 
