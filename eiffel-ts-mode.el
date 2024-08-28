@@ -41,7 +41,7 @@
     (modify-syntax-entry ?\' "\"" table)
     (modify-syntax-entry ?\" "\"" table)
 
-		(modify-syntax-entry ?% "\\" table)
+    (modify-syntax-entry ?% "\\" table)
 
     (modify-syntax-entry ?- ". 12" table)
     (modify-syntax-entry ?\n ">  " table)
@@ -56,19 +56,19 @@
     :language eiffel
     :override t
     :feature eiffel-highlight
-		([["class" "frozen" "feature" "end" "do" "alias" "convert"
-			 "invariant" "across" "as" "loop" "check"
-			 "if" "attached" "then" "else" "elseif"
-			 "note" "local" "create" "require" "ensure"
-			 "from" "variant" "until" "and" "and then" "or" "or else" "xor"
-			 "deferred" "inherit" "redefine" "undefine"
-			 "detachable" "old" "∀" "∃" "⟳" "⟲" "¦" "all" "some"
-			 "implies" "once" (unary_not) "attribute" "agent" "like" "export" "all"
-			 "rename" "inspect" "when" "Precursor" "obsolete"
-			 "debug" "rescue" "assign" (retry)
-			 "external"
-			 ]]
-		 @font-lock-keyword-face
+    ([["class" "frozen" "feature" "end" "do" "alias" "convert"
+       "invariant" "across" "as" "loop" "check"
+       "if" "attached" "then" "else" "elseif"
+       "note" "local" "create" "require" "ensure"
+       "from" "variant" "until" "and" "and then" "or" "or else" "xor"
+       "deferred" "inherit" "redefine" "undefine"
+       "detachable" "old" "∀" "∃" "⟳" "⟲" "¦" "all" "some"
+       "implies" "once" (unary_not) "attribute" "agent" "like" "export" "all"
+       "rename" "inspect" "when" "Precursor" "obsolete"
+       "debug" "rescue" "assign" (retry)
+       "external"
+       ]]
+     @font-lock-keyword-face
 
 
      [["(" ")" "[" "]" "<<" ">>"]] @font-lock-bracket-face
@@ -80,7 +80,7 @@
        (comparison)]]
      @font-lock-operator-face
 
-		 (at_cursor ["@" (identifier)] @font-lock-negation-char-face)
+     (at_cursor ["@" (identifier)] @font-lock-negation-char-face)
 
      [(boolean_constant) (current) (result) (void) (current)] @font-lock-constant-face
 
@@ -90,22 +90,22 @@
 
      (anchored (call (_) @font-lock-variable-use-face :anchor))
 
-		 (call_agent [(agent_target) @font-lock-property-use-face
-									(agent_unqualified (identifier) @font-lock-function-call-face)])
+     (call_agent [(agent_target) @font-lock-property-use-face
+                  (agent_unqualified (identifier) @font-lock-function-call-face)])
 
-		 (special_text) @font-lock-escape-face
+     (special_text) @font-lock-escape-face
      [(verbatim_string) (basic_manifest_string) (character_constant)] @font-lock-string-face
 
      [(integer_constant) (real_constant)] @font-lock-number-face
 
      (extended_feature_name (identifier) @font-lock-function-name-face)
-		 (assigner_mark (identifier) @font-lock-property-use-face)
+     (assigner_mark (identifier) @font-lock-property-use-face)
 
      (iteration (identifier) @font-lock-variable-name-face)
      (quantifier_loop (identifier) @font-lock-variable-name-face)
-		 (loop (identifier) @font-lock-variable-name-face)
+     (loop (identifier) @font-lock-variable-name-face)
 
-		 (object_test (identifier) @font-lock-variable-name-face)
+     (object_test (identifier) @font-lock-variable-name-face)
 
      (entity_declaration_group (identifier) @font-lock-variable-name-face)
 
@@ -113,9 +113,9 @@
      (undefine (identifier) @font-lock-property-use-face)
      (creation_clause (identifier) @font-lock-property-use-face)
      (rename_pair (identifier) @font-lock-property-use-face)
-		 (new_export_item (identifier) @font-lock-property-use-face)
+     (new_export_item (identifier) @font-lock-property-use-face)
 
-		 (assigner_mark (identifier) @font-lock-property-use-face)
+     (assigner_mark (identifier) @font-lock-property-use-face)
 
      ;; Highlight the modified value in calls:
      ;; x := 1  ;  a.b.c := 1
@@ -125,15 +125,15 @@
     :language eiffel
     :override t
     :feature check-then-warning
-		((check ("check" @font-lock-warning-face
-						 _ :?
-						 "then" @font-lock-warning-face
-						 _ :*
-						 "end" @font-lock-warning-face)))))
+    ((check ("check" @font-lock-warning-face
+             _ :?
+             "then" @font-lock-warning-face
+             _ :*
+             "end" @font-lock-warning-face)))))
 
 (defvar eiffel-ts-indent-rules
   `((eiffel
-		 ((n-p-gp "header_comment" "ERROR" nil) parent 6)
+     ((n-p-gp "header_comment" "ERROR" nil) parent 6)
      ((node-is "header_comment") parent 4)
      ((parent-is "source_file") column-0 0)
      ((node-is "feature_declaration") parent 2)
@@ -143,7 +143,7 @@
 
      ((and (parent-is "class_declaration") (node-is "class_name")) parent 2)
 
-		 ((n-p-gp "routine_mark" "ERROR" "feature_declaration") grand-parent 2)
+     ((n-p-gp "routine_mark" "ERROR" "feature_declaration") grand-parent 2)
      ((and (parent-is "ERROR") (node-is "new_feature")) parent 2)
      ((and (parent-is "ERROR") (node-is "feature_body")) parent 4)
      ((and (parent-is "ERROR") (node-is "local_declarations")) parent 4)
@@ -169,48 +169,48 @@
      ((node-is "exit_condition") parent 0)
      ((parent-is "exit_condition") parent 2)
      ((node-is "loop_body") parent 0)
-		 ((n-p-gp "end" "loop" nil) parent 0)
+     ((n-p-gp "end" "loop" nil) parent 0)
      ((parent-is "loop") parent-bol 2)
-		 ((parent-is "iteration") parent 2)
+     ((parent-is "iteration") parent 2)
 
      ((parent-is "notes") parent 2)
 
 
-		 ((and (node-is "comment")
-					 (or (parent-is "then_part") (parent-is "else_part")))
-			grand-parent 4)
+     ((and (node-is "comment")
+           (or (parent-is "then_part") (parent-is "else_part")))
+      grand-parent 4)
 
-		 ((parent-is "then_part_expression") parent-bol 2)
-		 ((n-p-gp "else" "conditional_expression" nil) parent-bol 0)
-		 ((n-p-gp "end" "conditional_expression" nil) parent-bol 0)
+     ((parent-is "then_part_expression") parent-bol 2)
+     ((n-p-gp "else" "conditional_expression" nil) parent-bol 0)
+     ((n-p-gp "end" "conditional_expression" nil) parent-bol 0)
      ((or (parent-is "then_part") (parent-is "else_part")) grand-parent 2)
 
-		 ((parent-is "check") parent 2)
+     ((parent-is "check") parent 2)
 
      ((and no-node (parent-is "class_declaration")) parent 2)
      ((parent-is "class_declaration") parent 0)
 
-		 ((node-is ")") parent-bol 0)
-		 ((node-is "]") parent-bol 0)
-		 ((parent-is "parenthesized") parent-bol 2)
-		 ((parent-is "expression") parent-bol 2)
-		 ((node-is "tuple_parameter_list") parent-bol 2)
-		 ((n-p-gp nil nil "tuple_parameter_list") parent-bol 2)
+     ((node-is ")") parent-bol 0)
+     ((node-is "]") parent-bol 0)
+     ((parent-is "parenthesized") parent-bol 2)
+     ((parent-is "expression") parent-bol 2)
+     ((node-is "tuple_parameter_list") parent-bol 2)
+     ((n-p-gp nil nil "tuple_parameter_list") parent-bol 2)
 
-		 ((parent-is "inheritance") parent 2)
-		 ((parent-is "parent") parent 2)
-		 ((n-p-gp nil nil "feature_adaptation") parent 2)
+     ((parent-is "inheritance") parent 2)
+     ((parent-is "parent") parent 2)
+     ((n-p-gp nil nil "feature_adaptation") parent 2)
 
-		 ((n-p-gp nil "actuals" nil) parent-bol 2)
-		 ((n-p-gp "." "call" nil) parent-bol 2)
+     ((n-p-gp nil "actuals" nil) parent-bol 2)
+     ((n-p-gp "." "call" nil) parent-bol 2)
 
-		 ((parent-is "verbatim_string_closer") parent-bol 0)
-		 ((parent-is "verbatim_string_content") no-indent)
+     ((parent-is "verbatim_string_closer") parent-bol 0)
+     ((parent-is "verbatim_string_content") no-indent)
 
-		 ((parent-is "local_declarations") grand-parent 2)
-		 ((parent-is "formal_arguments") parent-bol 2)
+     ((parent-is "local_declarations") grand-parent 2)
+     ((parent-is "formal_arguments") parent-bol 2)
 
-		 ((parent-is "actual_generics") parent-bol 2)
+     ((parent-is "actual_generics") parent-bol 2)
 
      ((node-is "end") parent 0)
      ((parent-is "ERROR") prev-line 0)
@@ -231,11 +231,11 @@
                             'syntax-table (string-to-syntax "(>"))
          (put-text-property (1- (treesit-node-end node)) (treesit-node-end node)
                             'syntax-table (string-to-syntax ")<")))
-				('special_text
-				 (put-text-property (1+ (treesit-node-start node)) (treesit-node-end node)
-														'syntax-table (string-to-syntax "."))
-				 (put-text-property (treesit-node-start node) (1+ (treesit-node-start node))
-														'syntax-table (string-to-syntax "\\")))))))
+        ('special_text
+         (put-text-property (1+ (treesit-node-start node)) (treesit-node-end node)
+                            'syntax-table (string-to-syntax "."))
+         (put-text-property (treesit-node-start node) (1+ (treesit-node-start node))
+                            'syntax-table (string-to-syntax "\\")))))))
 
 (defun eiffel-ts-mode-at-indentation-p (&optional point)
   "Is POINT at good indentation location?"
@@ -269,7 +269,7 @@
   "Setup treesit for `eiffel-ts-mode'."
 
   (setq-local treesit-font-lock-feature-list
-							'((eiffel-highlight check-then-warning)))
+              '((eiffel-highlight check-then-warning)))
 
   (setq-local treesit-font-lock-settings
               (apply #'treesit-font-lock-rules

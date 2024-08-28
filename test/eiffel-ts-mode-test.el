@@ -12,14 +12,14 @@
 (defun eiffel-should-indent (content column)
   "Assert indentation COLUMN on the last line of CONTENT."
   (eiffel-with-temp-buffer (eiffel-test-string content)
-    (indent-according-to-mode)
-    (should (= (current-indentation) column))))
+                           (indent-according-to-mode)
+                           (should (= (current-indentation) column))))
 
 (defun eiffel-should-indent-buffer (expected content)
   "Assert that CONTENT turns into EXPECTED after the buffer is re-indented."
   (eiffel-with-temp-buffer (eiffel-test-string content)
-    (indent-region (point-min) (point-max))
-    (should (string= (eiffel-test-string expected) (buffer-string)))))
+                           (indent-region (point-min) (point-max))
+                           (should (string= (eiffel-test-string expected) (buffer-string)))))
 
 (defun eiffel-test-string (s &rest args)
   (apply 'format (replace-regexp-in-string "^[ \t]*|" "" s) args))
