@@ -41,11 +41,11 @@
 ;;; Code:
 
 (defconst eiffel-packages
-  '(eiffel-ts-mode smartparens company))
+	'(eiffel-ts-mode smartparens company))
 
 (defun eiffel/init-eiffel-ts-mode ()
 	(use-package eiffel-ts-mode
-    :mode (("\\.e\\'" . eiffel-ts-mode))
+		:mode (("\\.e\\'" . eiffel-ts-mode))
 		:defer t))
 
 (defun eiffel/pre-init-smartparens ()
