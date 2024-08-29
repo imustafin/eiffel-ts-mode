@@ -246,7 +246,7 @@
 		(eq (point) point)))
 
 (defconst eiffel-ts-mode-indent-keywords
-	'("then" "else" "elsif" "rescue" "feature" "require" "ensure" "do"
+	'("then" "else" "elseif" "rescue" "feature" "require" "ensure" "do"
 		"deferred" "invariant" "from" "until" "loop" "note" "create"
 		"variant")
 	"When typing these keywords the line is reindented.")
