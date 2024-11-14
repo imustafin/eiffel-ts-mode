@@ -264,6 +264,13 @@
 								 ;; Reindent if it wasn't a keyword after all
 								 (eq (match-end 0) (1- pt)))))))))
 
+(defun eiffel-ts-defun-name-function (node)
+	"Extract defun name for different types of nodes."
+	(pcase (treesit-node-type node)
+		("feature_declaration" (treesit-node-text (treesit-search-subtree node "extended_feature_name")))
+		("class_declaration" (treesit-node-text (treesit-search-subtree node "class_name")))
+		(_ nil)))
+
 (defun eiffel-ts-setup ()
 	"Setup treesit for `eiffel-ts-mode'."
 
@@ -279,6 +286,12 @@
 	(setq treesit--indent-verbose t)
 
 	(setq syntax-propertize-function #'eiffel-ts-mode-syntax-propertize)
+
+	(setq treesit-defun-type-regexp "feature_declaration")
+	(setq treesit-defun-name-function #'eiffel-ts-defun-name-function)
+	(setq treesit-simple-imenu-settings
+				`(("Feature" "extended_feature_name" nil treesit-node-text)
+					("Class" "class_declaration" nil eiffel-ts-defun-name-function)))
 
 	(treesit-major-mode-setup))
 
