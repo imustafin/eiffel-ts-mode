@@ -211,3 +211,25 @@
    |variant
    |10 - i
    |end"))
+
+(ert-deftest eiffel-check-indent ()
+  "It should indent check-end on same level as check"
+  (eiffel-should-indent-buffer
+   "class A
+   |feature
+   |	x
+   |		do
+   |			check a then
+   |				f
+   |			end
+   |		end
+   |end"
+   "class A
+   |feature
+   |x
+   |do
+   |check a then
+   |f
+   |end
+   |end
+   |end"))

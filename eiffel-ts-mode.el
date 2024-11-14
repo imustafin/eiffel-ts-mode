@@ -66,7 +66,7 @@
 			 "implies" "once" (unary_not) "attribute" "agent" "like" "export" "all"
 			 "rename" "inspect" "when" "Precursor" "obsolete"
 			 "debug" "rescue" "assign" (retry)
-			 "external"
+			 "external" "separate"
 			 ]]
 		 @font-lock-keyword-face
 
@@ -139,11 +139,13 @@
 		 ((node-is "feature_declaration") parent 2)
 		 ((parent-is "feature_declaration") parent 2)
 
+		 ((node-is "end") parent-bol 0)
+
 		 ((parent-is "creation_clause") parent 2)
 
 		 ((and (parent-is "class_declaration") (node-is "class_name")) parent 2)
 
-		 ((n-p-gp "routine_mark" "ERROR" "feature_declaration") grand-parent 2)
+		 ((and (parent-is "ERROR") (node-is "routine_mark")) parent 4)
 		 ((and (parent-is "ERROR") (node-is "new_feature")) parent 2)
 		 ((and (parent-is "ERROR") (node-is "feature_body")) parent 4)
 		 ((and (parent-is "ERROR") (node-is "local_declarations")) parent 4)
@@ -169,7 +171,6 @@
 		 ((node-is "exit_condition") parent 0)
 		 ((parent-is "exit_condition") parent 2)
 		 ((node-is "loop_body") parent 0)
-		 ((n-p-gp "end" "loop" nil) parent 0)
 		 ((parent-is "loop") parent-bol 2)
 		 ((parent-is "iteration") parent 2)
 
@@ -182,7 +183,6 @@
 
 		 ((parent-is "then_part_expression") parent-bol 2)
 		 ((n-p-gp "else" "conditional_expression" nil) parent-bol 0)
-		 ((n-p-gp "end" "conditional_expression" nil) parent-bol 0)
 		 ((or (parent-is "then_part") (parent-is "else_part")) grand-parent 2)
 
 		 ((parent-is "check") parent 2)
@@ -212,7 +212,6 @@
 
 		 ((parent-is "actual_generics") parent-bol 2)
 
-		 ((node-is "end") parent 0)
 		 ((parent-is "ERROR") prev-line 0)
 		 (catch-all parent-bol 0))))
 
